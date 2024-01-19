@@ -1,0 +1,505 @@
+@import url("https://fonts.googleapis.com/css?family=Baloo+Bhaina");
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+p {
+  font-family: "Baloo Bhaina";
+}
+body {
+  background: #6fc3ed;
+}
+
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Baloo Bhaina";
+}
+.col {
+  flex-direction: column;
+}
+.hide {
+  display: none;
+}
+
+/* ============================= Layout ==================================== */
+#layout {
+  margin: 25px 5%;
+}
+
+#stadistics {
+  width: 30%;
+  font-family: "Baloo Bhaina";
+  font-size: 25px;
+}
+#main {
+  width: 70%;
+}
+#boats {
+  background-color: #f4f8ff;
+  border-radius: 15px;
+  padding: 25px 20px 40px;
+}
+#boats .boatDescription {
+  font-size: 12px;
+}
+#buttons {
+  justify-content: space-around;
+  min-width: 300px;
+  font-size: 16px;
+  margin: 20px 0;
+}
+
+/* ============================= Helper ==================================== */
+#helpSpace {
+  position: sticky;
+  display: inline-block;
+  bottom: 5px;
+  left: 5px;
+  background: #3535356e;
+  border: 2px solid #152c59;
+  border-radius: 15px;
+  z-index: 99;
+}
+#helpSpace .numbers,
+#helpSpace .letters {
+  font-size: 12px;
+  font-family: "Baloo Bhaina";
+  color: #f4f8ff;
+  height: 25px;
+  width: 25px;
+  font-weight: 300;
+}
+#helpSpace td {
+  border: 1px solid #001c53;
+  border-radius: 5px;
+}
+#helpSpace td div {
+  color: #f4f8ff;
+  text-align: center;
+}
+
+/* ============================= messageArea ==================================== */
+#messageArea {
+  width: 100%;
+  text-align: center;
+  margin-top: 5px;
+  color: #f4f8ff;
+  font-family: "Baloo Bhaina";
+  font-size: 25px;
+}
+
+/* ============================= Board ==================================== */
+#board {
+  min-width: 550px;
+}
+#board table {
+  border-collapse: separate;
+  border-spacing: 3px;
+  margin: 0 auto;
+}
+#board td {
+  position: relative;
+  width: 70px;
+  height: 70px;
+  border: 2px solid #152c59;
+  border-radius: 15px;
+}
+#board td:hover {
+  background: #538daa;
+}
+#board td div {
+  width: 70px;
+  height: 70px;
+}
+
+#board .numbers,
+#board .letters {
+  text-align: center;
+  font-size: 20px;
+  font-family: "Baloo Bhaina";
+  color: #f4f8ff;
+  height: 40px;
+  width: 40px;
+  border: none;
+}
+
+#board .hit {
+  position: absolute;
+  bottom: 5px;
+  left: 5px;
+  width: 60px;
+  height: 30px;
+  background: #851b15;
+  border-radius: 5px 5px 50px 35px;
+  animation: wave 1s ease-in-out infinite alternate;
+}
+#board .hit::after {
+  content: "";
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  width: 10px;
+  height: 10px;
+  background: #d2995f;
+  border-radius: 50%;
+  box-shadow: 15px 0 #fcce9e, 30px 0 #d2995f;
+}
+
+#board .hit::before {
+  content: "";
+  position: absolute;
+  bottom: 30px;
+  left: 10px;
+  width: 16px;
+  height: 30px;
+  background: #5a0400;
+  box-shadow: 15px 4px 0 -4px #ac3b35;
+}
+
+#board .miss {
+  width: 60px;
+  height: 10px;
+  position: absolute;
+  top: 30px;
+  left: 5px;
+  border-radius: 5px;
+  background: #47002b;
+  transform-origin: center center;
+  transform: rotate(45deg);
+  box-shadow: 3px 3px #c77daa;
+  animation: blow 0.5s ease-in;
+}
+
+#board .miss::after {
+  content: "";
+  width: 60px;
+  height: 10px;
+  position: absolute;
+  border-radius: 5px;
+  background: #47002b;
+  transform: rotate(90deg);
+  box-shadow: 3px -3px #c77daa;
+}
+
+#board .disabled {
+  pointer-events: none;
+  opacity: 0.2;
+}
+
+#board .flames {
+  position: absolute;
+  bottom: 40%;
+  left: 50%;
+  width: 60%;
+  height: 60%;
+  transform: translateX(-50%) rotate(45deg);
+}
+#board .hit .flames {
+  left: 30%;
+}
+#board .flames .flame {
+  position: absolute;
+  right: 0%;
+  bottom: 0%;
+  width: 0%;
+  height: 0%;
+  background-color: #612e25;
+  border-radius: 1vw;
+}
+#board .flames .flame:nth-child(2n + 1) {
+  animation: flameodd 1.5s ease-in infinite;
+}
+#board .flames .flame:nth-child(2n) {
+  animation: flameeven 1.5s ease-in infinite;
+}
+#board .flames .flame:nth-child(1) {
+  animation-delay: 0s;
+}
+#board .flames .flame:nth-child(2) {
+  animation-delay: 0.375s;
+}
+#board .flames .flame:nth-child(3) {
+  animation-delay: 0.75s;
+}
+#board .flames .flame:nth-child(4) {
+  animation-delay: 1.125s;
+}
+
+/* ============================= sink ==================================== */
+#boats .sink img {
+  transform: scale(0.8);
+  filter: opacity(0.5);
+  transition: all 2s ease-in-out;
+  animation: sink 1s ease-in !important;
+}
+#boats div:nth-child(2n) img {
+  animation: wave2 5s ease-in-out infinite alternate;
+}
+#boats div:nth-child(2n + 1) img {
+  animation: wave3 5s ease-in-out infinite alternate;
+}
+#boats .sink p {
+  text-decoration: line-through;
+}
+
+/* ============================= Buttons ==================================== */
+.buttonHelper {
+  background-color: #1899d6;
+  border: solid transparent;
+  border-radius: 16px;
+  border-width: 0 0 4px;
+  box-sizing: border-box;
+  color: #f4f8ff;
+  font-weight: 700;
+  width: 80%;
+  cursor: pointer;
+}
+.buttonHelper:hover {
+  background-color: #1d95c9;
+}
+
+#resetButton {
+  width: 100px;
+}
+.button-43 {
+  background-image: linear-gradient(-180deg, #37aee2 0%, #1e96c8 100%);
+  border-radius: 0.5rem;
+  box-sizing: border-box;
+  color: #f4f8ff;
+  display: flex;
+  font-size: 16px;
+  justify-content: center;
+  padding: 0.8rem 1rem;
+  width: 100%;
+  border: 0;
+  cursor: pointer;
+  font-family: "Baloo Bhaina";
+}
+.button-43:hover {
+  background-image: linear-gradient(-180deg, #1d95c9 0%, #17759c 100%);
+}
+
+/* ============================= Switch ==================================== */
+#switchDiv {
+  color: #f4f8ff;
+}
+.switchToogle input[type="checkbox"] {
+  height: 0;
+  width: 0;
+  visibility: hidden;
+}
+.switchToogle label {
+  cursor: pointer;
+  text-indent: -9999px;
+  width: 100px;
+  height: 50px;
+  background: grey;
+  display: block;
+  border-radius: 100px;
+  position: relative;
+}
+.switchToogle label:after {
+  content: "";
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  width: 40px;
+  height: 40px;
+  background: #fff;
+  border-radius: 90px;
+  transition: 0.3s;
+}
+.switchToogle input:checked + label {
+  background: #bada55;
+}
+.switchToogle input:checked + label:after {
+  left: calc(100% - 5px);
+  transform: translateX(-100%);
+}
+.switchToogle label:active:after {
+  width: 60px;
+}
+
+/* ============================= Animations ==================================== */
+
+@keyframes wave {
+  0% {
+    transform: rotate(-7deg);
+  }
+  100% {
+    transform: rotate(5deg);
+  }
+}
+
+@keyframes wave2 {
+  0% {
+    transform: rotate(-2deg);
+  }
+  100% {
+    transform: rotate(1deg);
+  }
+}
+
+@keyframes wave3 {
+  0% {
+    transform: rotate(1deg);
+  }
+  100% {
+    transform: rotate(-2deg);
+  }
+}
+
+@keyframes sink {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(0.8);
+  }
+}
+
+@keyframes blowship {
+  0% {
+    transform: scale(0.5);
+  }
+  40% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes blow {
+  0% {
+    transform: scale(0);
+  }
+  1% {
+    transform: rotate(90deg);
+  }
+  5% {
+    transform: rotate(180deg);
+  }
+  50% {
+    transform: scale(1.7);
+  }
+  100% {
+    transform: scale(0);
+    transform: rotate(315deg);
+  }
+}
+
+@keyframes flameodd {
+  0%,
+  100% {
+    width: 0%;
+    height: 0%;
+  }
+  25% {
+    width: 100%;
+    height: 100%;
+  }
+  0% {
+    background-color: #612e25;
+    z-index: 1000000;
+  }
+  40% {
+    background-color: #fdac01;
+    z-index: 1000000;
+  }
+  100% {
+    background-color: #f73b01;
+    z-index: -10;
+  }
+  0% {
+    right: 0%;
+    bottom: 0%;
+  }
+  25% {
+    right: 1%;
+    bottom: 2%;
+  }
+  100% {
+    right: 150%;
+    bottom: 170%;
+  }
+}
+@keyframes flameeven {
+  0%,
+  100% {
+    width: 0%;
+    height: 0%;
+  }
+  25% {
+    width: 100%;
+    height: 100%;
+  }
+  0% {
+    background-color: #612e25;
+    z-index: 1000000;
+  }
+  40% {
+    background-color: #f73b01;
+    z-index: 1000000;
+  }
+  100% {
+    background-color: #353535;
+    z-index: -10;
+  }
+  0% {
+    right: 0%;
+    bottom: 0%;
+  }
+  25% {
+    right: 2%;
+    bottom: 1%;
+  }
+  100% {
+    right: 170%;
+    bottom: 150%;
+  }
+}
+
+/* ============================= Red Clases ==================================== */
+
+.r-1 {
+  background-color: none;
+}
+.r-2 {
+  background-color: #f2000075;
+}
+.r-3 {
+  background-color: #e6000075;
+}
+.r-4 {
+  background-color: #d90000a2;
+}
+.r-5 {
+  background-color: #bf0000af;
+}
+.r-6 {
+  background-color: #a60000cb;
+}
+.r-7 {
+  background-color: #990000d5;
+}
+.r-8 {
+  background-color: #8c0000;
+}
+.r-9 {
+  background-color: #8c0000;
+}
+
+.r-10 {
+  background-color: #8c0000;
+}
+
+.r-11 {
+  background-color: #8c0000;
+}
