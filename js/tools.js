@@ -50,7 +50,7 @@ const tools = {
     let guessArray = Array.from({ length: this.optionsLenght }, (_, i) => 0);
     //Analize Horizontaly
     for (let i = 0; i < this.boardSize; i++) {
-      const initial = i + 7 * i - i;
+      const initial = this.boardSize * i;
       const final = initial + this.boardSize - shipLength + 1;
       for (let j = initial; j < final; j++) {
         if (
@@ -67,9 +67,14 @@ const tools = {
       for (
         let j = i;
         j < guessArray.length, num < this.boardSize - shipLength + 1;
-        j += 7, num++
+        j += this.boardSize, num++
       ) {
-        increaseArrVer(guessArray, j);
+        let arrHit = [];
+        for (let k = 0; k < shipLength; k++) {
+          arrHit.push(this.boardSituation.hits[j + k * this.boardSize]);
+        }
+        if (arrHit.every((v) => v === ""))
+          increaseArrVer(guessArray, j, this.boardSize);
       }
     }
     return guessArray;
@@ -78,9 +83,13 @@ const tools = {
         arr[i]++;
       }
     }
-    function increaseArrVer(arr, initial) {
-      for (let i = initial; i < initial + 7 * shipLength; i += 7) {
-        if (tools.boardSituation.hits[i] === "") arr[i]++;
+    function increaseArrVer(arr, initial, boardSize) {
+      for (
+        let i = initial;
+        i < initial + boardSize * shipLength;
+        i += boardSize
+      ) {
+        arr[i]++;
       }
     }
   },
@@ -92,7 +101,8 @@ const tools = {
     const quantiles = Array.from({ length: particions + 1 }, (_, i) =>
       findQuantile(sortedArr, porcentange * i)
     );
-    return quantiles.filter((v, i, a) => a.indexOf(v) === i);
+    return quantiles;
+    //return quantiles.filter((v, i, a) => a.indexOf(v) === i);
 
     function findQuantile(arr, quantile) {
       const quantileIndex = Math.floor((sortedArr.length - 1) * quantile);
@@ -101,13 +111,26 @@ const tools = {
   },
 
   //=====================Console Display=====================
-  //   printTable: function (arr) {
-  //     yHeader = ["A", "B", "C", "D", "E", "F", "G"];
-  //     xHeader = ["0", "1", "2", "3", "4", "5", "6"];
-  //     console.log(" " + "\t" + xHeader);
-  //     for (let i = 0; i < this.boardSize; i++) {
-  //       const initial = i + 7 * i - i;
-  //       console.log(yHeader[i] + "\t" + arr.slice(initial, initial + 7));
-  //     }
-  //   },
+  printTable: function (arr) {
+    const yHeader = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"];
+    const xHeader = [
+      "00",
+      "01",
+      "02",
+      "03",
+      "04",
+      "05",
+      "06",
+      "07",
+      "08",
+      "09",
+    ];
+    console.log(" " + "\t" + xHeader);
+    for (let i = 0; i < this.boardSize; i++) {
+      const initial = this.boardSize * i;
+      console.log(
+        yHeader[i] + "\t" + arr.slice(initial, initial + this.boardSize)
+      );
+    }
+  },
 };

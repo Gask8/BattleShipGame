@@ -35,8 +35,13 @@ body {
   font-size: 25px;
 }
 #main {
-  width: 70%;
+  width: 60%;
 }
+
+#space {
+  width: 10%;
+}
+
 #boats {
   background-color: #f4f8ff;
   border-radius: 15px;
@@ -54,10 +59,10 @@ body {
 
 /* ============================= Helper ==================================== */
 #helpSpace {
-  position: sticky;
+  position: absolute;
   display: inline-block;
-  bottom: 5px;
-  left: 5px;
+  top: 10%;
+  right: 5px;
   background: #3535356e;
   border: 2px solid #152c59;
   border-radius: 15px;
@@ -469,37 +474,35 @@ body {
 /* ============================= Red Clases ==================================== */
 
 .r-1 {
-  background-color: none;
+  background-color: #f2000023;
 }
 .r-2 {
-  background-color: #f2000075;
+  background-color: #f2000031;
 }
 .r-3 {
-  background-color: #e6000075;
+  background-color: #f325253a;
 }
 .r-4 {
-  background-color: #d90000a2;
+  background-color: #ff232354;
 }
 .r-5 {
-  background-color: #bf0000af;
+  background-color: #f2000075;
 }
 .r-6 {
-  background-color: #a60000cb;
+  background-color: #e6000075;
 }
 .r-7 {
-  background-color: #990000d5;
+  background-color: #d90000a2;
 }
 .r-8 {
-  background-color: #8c0000;
+  background-color: #bf0000af;
 }
 .r-9 {
-  background-color: #8c0000;
+  background-color: #a60000cb;
 }
-
 .r-10 {
-  background-color: #8c0000;
+  background-color: #990000d5;
 }
-
 .r-11 {
-  background-color: #8c0000;
+  background-color: #448c00;
 }

@@ -10,6 +10,7 @@ const controller = {
       if (hit && model.shipsSunk === model.numShips) {
         this.finishTheGame();
       }
+      return hit;
     }
   },
 
@@ -24,13 +25,61 @@ const controller = {
     const delay = (ms) => new Promise((res) => setTimeout(res, ms));
     do {
       const randLocation = getRandomInt(this.boardOptions.length);
-      this.processGuess(this.boardOptions[randLocation]);
+      const locationName = this.boardOptions[randLocation];
+      const hit = this.processGuess(this.boardOptions[randLocation]);
+      if (hit)
+        await sinkShip(this.boardOptions[randLocation], this.boardOptions);
       await delay(100);
-      this.boardOptions.splice(randLocation, 1);
+      this.boardOptions.splice(this.boardOptions.indexOf(locationName), 1);
     } while (!model.end && this.isAutoPlay);
 
     function getRandomInt(max) {
       return Math.floor(Math.random() * max);
+    }
+
+    async function sinkShip(location, arr, direction = "all") {
+      const delay = (ms) => new Promise((res) => setTimeout(res, ms));
+      const boardSize = initialData.boardSize;
+      const num = Number(location);
+      let posibleLocations = [];
+      //up
+      if ((direction === "up" || direction === "all") && num >= boardSize) {
+        posibleLocations.push({ loc: num - boardSize, dir: "up" }); // up
+      }
+      if (
+        (direction === "down" || direction === "all") &&
+        num <= boardSize * boardSize - boardSize
+      ) {
+        posibleLocations.push({ loc: num + boardSize, dir: "down" }); // down
+      }
+      if (
+        (direction === "right" || direction === "all") &&
+        num % boardSize !== 0
+      ) {
+        posibleLocations.push({ loc: num + 1, dir: "right" }); // right
+      }
+      if (
+        (direction === "left" || direction === "all") &&
+        num % boardSize !== 0
+      ) {
+        posibleLocations.push({ loc: num - 1, dir: "left" }); // left
+      }
+
+      let p = posibleLocations
+        .map((e) => {
+          e.loc = e.loc < boardSize ? "0" + e.loc.toString() : e.loc.toString();
+          return e;
+        })
+        .filter((e) => arr.includes(e.loc));
+
+      for (let i = 0; i < p.length; i++) {
+        await delay(100);
+        const hit = controller.processGuess(p[i].loc);
+        if (hit) {
+          await sinkShip(p[i].loc, arr, p[i].dir);
+        }
+        arr.splice(arr.indexOf(p[i].loc), 1);
+      }
     }
   },
 
@@ -56,7 +105,7 @@ const controller = {
     tools.resetBoardSituation();
 
     if (this.isAutoPlay) {
-      controller.autoPlay();
+      this.autoPlay();
     }
   },
 };

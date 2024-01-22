@@ -15,7 +15,7 @@ const model = {
           return true;
         } else if (index >= 0) {
           ship.hits[index] = "hit";
-          tools.updateBoardSituation(guess, "hit");
+          tools.updateBoardSituation(guess, "miss");
           view.displayHit(guess);
           view.displayMessage("It's a hit!");
           if (this.isSunk(ship)) {

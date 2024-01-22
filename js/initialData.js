@@ -2,8 +2,14 @@ const locationId = document.querySelectorAll("#board td div");
 const locationIdtoArray = Array.from(locationId);
 
 const initialData = {
-  boardSize: 7,
+  boardSize: 10,
   ships: [
+    {
+      locations: [0, 0, 0, 0, 0],
+      hits: ["", "", "", "", ""],
+      shipLength: 5,
+      name: "carrier",
+    },
     {
       locations: [0, 0, 0, 0],
       hits: ["", "", "", ""],

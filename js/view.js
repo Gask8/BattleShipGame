@@ -58,6 +58,7 @@ const view = {
     function whereIsTheValue(value, arr) {
       for (let i = 0; i < arr.length; i++) {
         if (value < arr[i]) {
+          if (value === 0) return 0;
           return i;
         }
       }
@@ -79,7 +80,6 @@ const view = {
       .forEach((v) => v.classList.remove("sink"));
 
     function takeOutFire({ locations }) {
-      console.log(locations);
       for (let i = 0; i < locations.length; i++) {
         const cell = document.getElementById(locations[i]);
         cell?.querySelector("div")?.remove();
